@@ -1,0 +1,16 @@
+{
+  "name": "node-games-backend",
+  "version": "0.0.1",
+  "description": "node-games challenge backend",
+  "main": "src/index.mjs",
+  "type": "module",
+  "scripts": {
+    "start": "node ./src/index.mjs",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jone Polvora",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
