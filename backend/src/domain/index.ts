@@ -1,12 +1,26 @@
 import { randomUUID } from "crypto"
 
-export class Game {
-    constructor(readonly id: string, readonly name: string, readonly ranking: Number, readonly year: Number) {
+const template: string = `
+{
+    "id": "/game-cube/metroid-prime",
+    "titulo": "Metroid Prime (GC)",
+    "nota": 97.8,
+    "ano": 2002,
+    "urlImagem": "https://l3-processoseletivo.azurewebsites.net/api/CapaJogo/game-cube/metroid-prime"
+  }
+`
 
-    }
+export class Game {
+    constructor(
+        readonly id: string,
+        readonly title: string,
+        readonly note: Number,
+        readonly year: Number,
+        readonly urlImage: String
+    ) { }
 }
 
-export enum Slot {
+export const enum Slot {
     Tie,
     Left,
     Right
@@ -24,9 +38,9 @@ export class Match {
     run(): [Slot, Game] {
 
         //compare ranking 
-        this.winnerSlot = this.left.ranking > this.right.ranking ? Slot.Left : Slot.Tie;
+        this.winnerSlot = this.left.note > this.right.note ? Slot.Left : Slot.Tie;
         if (this.winnerSlot === Slot.Tie) {
-            this.winnerSlot = this.right.ranking > this.left.ranking ? Slot.Right : Slot.Tie;
+            this.winnerSlot = this.right.note > this.left.note ? Slot.Right : Slot.Tie;
         }
 
         //is it a tie ?
@@ -51,8 +65,8 @@ export class Match {
 export default function run() {
     var gameId = randomUUID();
 
-    var left = new Game(randomUUID(), "A", 1, 2000);
-    var right = new Game(randomUUID(), "B", 2, 2001);
+    var left = new Game(randomUUID(), "A", 1, 2000, "");
+    var right = new Game(randomUUID(), "B", 2, 2001, "");
 
     const match = new Match(gameId, left, right);
 

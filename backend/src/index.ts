@@ -1,6 +1,6 @@
-import 'dotenv/config'
 import getApp from './app'
 import { Express, Application } from 'express'
+import { configDotenv } from 'dotenv'
 
 function startApp(app: Express): Promise<void> {
     const port = Number(process.env.PORT) || 3000
@@ -19,7 +19,16 @@ function stopApp(app: Application): void {
 
 (async () => {
     try {
-        const app = await getApp()       
+        console.info("starting app environment")
+        const env = configDotenv({
+            debug: process.env.NODE_ENV === "development" || false
+        })
+
+        if (env.error) throw new Error(env.error?.message)
+
+        console.log(env.parsed)
+
+        const app = await getApp()
         app.on("error", stopApp)
 
         if (process.env.TEST_ERROR === "true") {
